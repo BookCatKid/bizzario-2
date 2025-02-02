@@ -10,6 +10,7 @@ from lib.engine_wrapper import MinimalEngine
 from lib.lichess_types import MOVE, HOMEMADE_ARGS_TYPE
 import logging
 import sys
+import subprocess
 
 # Use this logger variable to print messages to the console or log files.
 # logger.info("message") will always print "message" to the console or log file.
@@ -20,6 +21,7 @@ logger = logging.getLogger(__name__)
 if sys.platform == "win32":
 	stockfishPath = "stockfish\\stockfish.exe"
 else:
+	subprocess.call("chmod +x ./stockfish/stockfish")
 	stockfishPath = "stockfish/stockfish"
 
 class ExampleEngine(MinimalEngine):
@@ -123,7 +125,7 @@ class WorstFish(ExampleEngine):
 
 
 global chance_worst
-chance_worst = 10
+chance_worst = 7
 
 class MediumFish(ExampleEngine):
 	def __init__(self, *args, **kwargs):
@@ -212,9 +214,9 @@ class MediumFish(ExampleEngine):
 			print("Stockfish")
 			searchTime = timeLeft
 			if isinstance(searchTime, chess.engine.Limit) and searchTime.time is not None:
-				searchTime = searchTime.time / 1000
+				searchTime = searchTime.time / 400
 			else:
-				searchTime = 0.1 
+				searchTime = 1 
 			move = self.stockfish.play(board, chess.engine.Limit(time=searchTime)).move
 			return PlayResult(move, None)
 
