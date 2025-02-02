@@ -22,6 +22,7 @@ if sys.platform == "win32":
 	stockfishPath = "stockfish\\stockfish.exe"
 else:
 	subprocess.call("pwd")
+	subprocess.call('lscpu')
 	subprocess.call(["chmod", "+x", "stockfish/stockfish"])
 	stockfishPath = "stockfish/stockfish"
 
