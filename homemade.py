@@ -9,13 +9,18 @@ import random
 from lib.engine_wrapper import MinimalEngine
 from lib.lichess_types import MOVE, HOMEMADE_ARGS_TYPE
 import logging
+import sys
 
 # Use this logger variable to print messages to the console or log files.
 # logger.info("message") will always print "message" to the console or log file.
 # logger.debug("message") will only print "message" if verbose logging is enabled.
 logger = logging.getLogger(__name__)
 
-stockfishPath = "stockfish\\stockfish.exe"
+
+if sys.platform == "win32":
+	stockfishPath = "stockfish\\stockfish.exe"
+else:
+	stockfishPath = "stockfish/stockfish"
 
 class ExampleEngine(MinimalEngine):
     """An example engine that all homemade engines inherit."""
@@ -118,7 +123,7 @@ class WorstFish(ExampleEngine):
 
 
 global chance_worst
-chance_worst = 25
+chance_worst = 10
 
 class MediumFish(ExampleEngine):
 	def __init__(self, *args, **kwargs):
